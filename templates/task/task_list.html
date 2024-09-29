@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{%block content%}
+<form action="" method="get">
+  {{form.as_p}}
+  <button type="submit">Search</button>
+</form>
+{%for task in tasks%}
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">{{task.title}}</h5>
+    <p class="card-text">{{task.description}}</p>
+    <ul class="list-group list-group-flush">
+      {%for category in task.category.all%}
+        <li class="list-group-item">{{ category.name }}</li>
+      {%endfor%}
+    </ul>
+    <a href="/api/v1/tasks/tasks/{{task.id}}/" class="btn btn-primary">GO FUCK YOURE SELF GIGGANIGGA</a>
+  </div>
+</div>
+{%endfor%}
+<div style="display: flex; justify-content: center; margin-top: 20px; margin-bottom: 20px">
+{%for page in max_pages%}
+  {% if request.GET %}
+    <a class="btn btn-primary" href="{{request.get_full_path}}&page={{page}}">{{page}}</a>
+  {%else%}
+    <a class="btn btn-primary" href="{{request.get_full_path}}?page={{page}}">{{page}}</a>
+  {%endif%}
+{%endfor%}
+  </div>
+{%endblock%}
